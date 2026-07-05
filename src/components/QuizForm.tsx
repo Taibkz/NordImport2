@@ -33,7 +33,6 @@ export default function QuizForm() {
   };
 
   const nextStep = () => {
-    // Basic validation per step
     if (step === 1 && (!formData.marca || !formData.modelo)) {
       setErrorMsg("Por favor, introduce la marca y el modelo del coche.");
       return;
@@ -72,7 +71,6 @@ export default function QuizForm() {
     };
 
     if (!isSupabaseConfigured || !supabase) {
-      // Simulate success in demo mode
       setTimeout(() => {
         console.log("Demo Mode Lead Payload:", leadPayload);
         setDemoNotice(true);
@@ -90,7 +88,6 @@ export default function QuizForm() {
       setSuccess(true);
     } catch (err: any) {
       console.error("Error inserting lead:", err);
-      // Fallback to success even on error but display demo notification to avoid locking the UI
       setDemoNotice(true);
       setSuccess(true);
     } finally {
@@ -99,16 +96,16 @@ export default function QuizForm() {
   };
 
   return (
-    <section id="quiz" className="py-24 bg-slate-50 border-t border-b border-neutral-100">
+    <section id="quiz" className="py-20 lg:py-24 bg-slate-50 border-t border-b border-neutral-100">
       <div className="max-w-3xl mx-auto px-6">
         
         {/* Section Title */}
         {!success && (
-          <div className="text-center mb-12 flex flex-col items-center">
+          <div className="text-center mb-8 lg:mb-12 flex flex-col items-center">
             <span className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent-gold mb-3">
               Asistente de Configuración
             </span>
-            <h2 className="font-serif text-3xl font-normal tracking-tight text-neutral-900 mb-4">
+            <h2 className="font-serif text-2xl sm:text-3xl font-normal tracking-tight text-neutral-900 mb-4">
               Encuentra tu Coche Ideal
             </h2>
             <div className="h-[2px] w-12 bg-accent-gold mb-4" />
@@ -119,7 +116,7 @@ export default function QuizForm() {
         )}
 
         {/* Quiz Container Card */}
-        <div className="bg-white border border-neutral-200/60 shadow-xl rounded-2xl p-8 sm:p-12 relative overflow-hidden">
+        <div className="bg-white border border-neutral-200/60 shadow-xl rounded-2xl p-6 sm:p-12 relative overflow-hidden">
           
           {/* Progress Indicator */}
           {!success && (
@@ -156,12 +153,12 @@ export default function QuizForm() {
               {/* STEP 1: VEHICLE SPECIFICATIONS */}
               {step === 1 && (
                 <div className="space-y-4 animate-fadeIn">
-                  <h3 className="font-serif text-xl font-normal text-neutral-900 mb-2">
+                  <h3 className="font-serif text-lg sm:text-xl font-normal text-neutral-900 mb-2">
                     ¿Qué coche estás buscando?
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="marca" className="block font-sans text-xs font-bold text-neutral-700 uppercase tracking-wider mb-2">
+                      <label htmlFor="marca" className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">
                         Marca *
                       </label>
                       <input
@@ -171,12 +168,12 @@ export default function QuizForm() {
                         value={formData.marca}
                         onChange={handleChange}
                         placeholder="Ej. Porsche, Audi, BMW"
-                        className="w-full font-sans text-sm border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
+                        className="w-full font-sans text-base border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
                         required
                       />
                     </div>
                     <div>
-                      <label htmlFor="modelo" className="block font-sans text-xs font-bold text-neutral-700 uppercase tracking-wider mb-2">
+                      <label htmlFor="modelo" className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">
                         Modelo *
                       </label>
                       <input
@@ -186,17 +183,18 @@ export default function QuizForm() {
                         value={formData.modelo}
                         onChange={handleChange}
                         placeholder="Ej. 911 Carrera S, RS6"
-                        className="w-full font-sans text-sm border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
+                        className="w-full font-sans text-base border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
                         required
                       />
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="anoMin" className="block font-sans text-xs font-bold text-neutral-700 uppercase tracking-wider mb-2">
+                    <label htmlFor="anoMin" className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">
                       Año Mínimo (Opcional)
                     </label>
                     <input
                       type="number"
+                      inputMode="numeric"
                       id="anoMin"
                       name="anoMin"
                       value={formData.anoMin}
@@ -204,7 +202,7 @@ export default function QuizForm() {
                       placeholder="Ej. 2020"
                       min="2000"
                       max={new Date().getFullYear()}
-                      className="w-full font-sans text-sm border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
+                      className="w-full font-sans text-base border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
                     />
                   </div>
                 </div>
@@ -213,26 +211,27 @@ export default function QuizForm() {
               {/* STEP 2: BUDGET */}
               {step === 2 && (
                 <div className="space-y-4 animate-fadeIn">
-                  <h3 className="font-serif text-xl font-normal text-neutral-900 mb-2">
+                  <h3 className="font-serif text-lg sm:text-xl font-normal text-neutral-900 mb-2">
                     ¿Cuál es tu presupuesto aproximado?
                   </h3>
                   <p className="font-sans text-xs text-neutral-500 mb-4">
                     Esto nos permite filtrar y negociar con garantías en concesionarios de confianza.
                   </p>
                   <div>
-                    <label htmlFor="presupuesto" className="block font-sans text-xs font-bold text-neutral-700 uppercase tracking-wider mb-2">
+                    <label htmlFor="presupuesto" className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">
                       Presupuesto Máximo (€) *
                     </label>
                     <div className="relative rounded-lg shadow-sm">
                       <input
                         type="number"
+                        inputMode="numeric"
                         id="presupuesto"
                         name="presupuesto"
                         value={formData.presupuesto}
                         onChange={handleChange}
                         placeholder="Ej. 95000"
                         min="1000"
-                        className="w-full font-sans text-sm border border-neutral-300 rounded-lg pl-4 pr-12 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
+                        className="w-full font-sans text-base border border-neutral-300 rounded-lg pl-4 pr-12 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
                         required
                       />
                       <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
@@ -246,14 +245,14 @@ export default function QuizForm() {
               {/* STEP 3: SERVICE LEVEL */}
               {step === 3 && (
                 <div className="space-y-4 animate-fadeIn">
-                  <h3 className="font-serif text-xl font-normal text-neutral-900 mb-2">
+                  <h3 className="font-serif text-lg sm:text-xl font-normal text-neutral-900 mb-2">
                     Elige el nivel de servicio deseado
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                     {/* Básico */}
                     <div
                       onClick={() => handleServiceSelect("basico")}
-                      className={`cursor-pointer rounded-xl p-4 border-2 transition-all flex flex-col justify-between h-36 ${
+                      className={`cursor-pointer rounded-xl p-4 border-2 transition-all flex flex-col justify-between h-32 sm:h-36 ${
                         formData.servicio === "basico"
                           ? "border-neutral-900 bg-neutral-50"
                           : "border-neutral-200 hover:border-neutral-300 bg-white"
@@ -275,13 +274,13 @@ export default function QuizForm() {
                     {/* Estándar */}
                     <div
                       onClick={() => handleServiceSelect("estandar")}
-                      className={`cursor-pointer rounded-xl p-4 border-2 transition-all flex flex-col justify-between h-36 relative ${
+                      className={`cursor-pointer rounded-xl p-4 border-2 transition-all flex flex-col justify-between h-32 sm:h-36 relative ${
                         formData.servicio === "estandar"
                           ? "border-accent-red bg-red-50/20"
                           : "border-neutral-200 hover:border-neutral-300 bg-white"
                       }`}
                     >
-                      <div className="absolute -top-2.5 right-4 bg-accent-red text-white font-sans text-[8px] font-bold px-2 py-0.5 rounded-full">
+                      <div className="absolute -top-2 right-4 bg-accent-red text-white font-sans text-[8px] font-bold px-2 py-0.5 rounded-full">
                         Popular
                       </div>
                       <div className="flex items-center justify-between">
@@ -293,14 +292,14 @@ export default function QuizForm() {
                         </div>
                       </div>
                       <p className="font-sans text-[10px] text-neutral-500 leading-tight">
-                        Negociación, vídeo de inspección completa e ITV española pasada.
+                        Negociación, vídeo de inspección completa e ITV pasada.
                       </p>
                     </div>
 
                     {/* Premium */}
                     <div
                       onClick={() => handleServiceSelect("premium")}
-                      className={`cursor-pointer rounded-xl p-4 border-2 transition-all flex flex-col justify-between h-36 ${
+                      className={`cursor-pointer rounded-xl p-4 border-2 transition-all flex flex-col justify-between h-32 sm:h-36 ${
                         formData.servicio === "premium"
                           ? "border-accent-gold bg-amber-50/10"
                           : "border-neutral-200 hover:border-neutral-300 bg-white"
@@ -315,7 +314,7 @@ export default function QuizForm() {
                         </div>
                       </div>
                       <p className="font-sans text-[10px] text-neutral-500 leading-tight">
-                        Matriculado a tu nombre, 1 año de garantía y entrega a domicilio.
+                        Matriculado, 1 año de garantía y entrega a domicilio.
                       </p>
                     </div>
                   </div>
@@ -325,12 +324,12 @@ export default function QuizForm() {
               {/* STEP 4: CONTACT INFORMATION */}
               {step === 4 && (
                 <div className="space-y-4 animate-fadeIn">
-                  <h3 className="font-serif text-xl font-normal text-neutral-900 mb-2">
+                  <h3 className="font-serif text-lg sm:text-xl font-normal text-neutral-900 mb-2">
                     ¿Cómo nos ponemos en contacto?
                   </h3>
                   <div className="space-y-3">
                     <div>
-                      <label htmlFor="nombre" className="block font-sans text-xs font-bold text-neutral-700 uppercase tracking-wider mb-2">
+                      <label htmlFor="nombre" className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">
                         Nombre Completo *
                       </label>
                       <input
@@ -340,38 +339,40 @@ export default function QuizForm() {
                         value={formData.nombre}
                         onChange={handleChange}
                         placeholder="Ej. Juan Pérez"
-                        className="w-full font-sans text-sm border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
+                        className="w-full font-sans text-base border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
                         required
                       />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="telefono" className="block font-sans text-xs font-bold text-neutral-700 uppercase tracking-wider mb-2">
+                        <label htmlFor="telefono" className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">
                           Teléfono de Contacto *
                         </label>
                         <input
                           type="tel"
+                          inputMode="tel"
                           id="telefono"
                           name="telefono"
                           value={formData.telefono}
                           onChange={handleChange}
                           placeholder="Ej. +34 600 000 000"
-                          className="w-full font-sans text-sm border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
+                          className="w-full font-sans text-base border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
                           required
                         />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block font-sans text-xs font-bold text-neutral-700 uppercase tracking-wider mb-2">
+                        <label htmlFor="email" className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">
                           Correo Electrónico *
                         </label>
                         <input
                           type="email"
+                          inputMode="email"
                           id="email"
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="Ej. juan@correo.com"
-                          className="w-full font-sans text-sm border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
+                          className="w-full font-sans text-base border border-neutral-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent-gold bg-neutral-50 focus:bg-white transition-colors"
                           required
                         />
                       </div>
@@ -386,7 +387,7 @@ export default function QuizForm() {
                   <button
                     type="button"
                     onClick={prevStep}
-                    className="cursor-pointer inline-flex items-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider text-neutral-600 hover:text-neutral-900 transition-colors py-2 px-4"
+                    className="cursor-pointer inline-flex items-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider text-neutral-600 hover:text-neutral-900 transition-colors py-2 px-3"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Atrás</span>
@@ -399,7 +400,7 @@ export default function QuizForm() {
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="cursor-pointer bg-neutral-900 hover:bg-neutral-800 text-white inline-flex items-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider py-3.5 px-6 rounded-lg transition-colors ml-auto"
+                    className="cursor-pointer bg-neutral-900 hover:bg-neutral-800 text-white inline-flex items-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider py-3 px-5 rounded-lg transition-colors ml-auto"
                   >
                     <span>Siguiente</span>
                     <ArrowRight className="w-4 h-4" />
@@ -408,7 +409,7 @@ export default function QuizForm() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="cursor-pointer bg-accent-red hover:bg-red-700 disabled:bg-neutral-400 text-white inline-flex items-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider py-4 px-8 rounded-lg shadow-md hover:shadow-lg transition-all ml-auto"
+                    className="cursor-pointer bg-accent-red hover:bg-red-700 disabled:bg-neutral-400 text-white inline-flex items-center space-x-2 font-sans text-xs font-bold uppercase tracking-wider py-3.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all ml-auto"
                   >
                     {loading ? (
                       <span>Enviando...</span>
@@ -425,21 +426,21 @@ export default function QuizForm() {
             </form>
           ) : (
             /* SUCCESS SCREEN WITH ANIMATED CHECKMARK */
-            <div className="text-center py-8 flex flex-col items-center justify-center space-y-6 animate-scaleIn">
+            <div className="text-center py-6 flex flex-col items-center justify-center space-y-5 animate-scaleIn">
               
               {/* Checkmark bubble */}
               <div className="relative">
-                <div className="w-20 h-20 bg-accent-green/10 border border-accent-green/30 rounded-full flex items-center justify-center text-accent-green animate-bounce">
-                  <Check className="w-10 h-10 stroke-[3]" />
+                <div className="w-16 h-16 bg-accent-green/10 border border-accent-green/30 rounded-full flex items-center justify-center text-accent-green animate-bounce">
+                  <Check className="w-8 h-8 stroke-[3]" />
                 </div>
-                <div className="absolute top-0 right-0 bg-accent-gold rounded-full p-1.5 text-neutral-900 border border-white">
-                  <Sparkles className="w-4 h-4 animate-spin-slow" />
+                <div className="absolute top-0 right-0 bg-accent-gold rounded-full p-1 text-neutral-900 border border-white">
+                  <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
                 </div>
               </div>
 
               {/* Success Messages */}
-              <div className="space-y-3 max-w-lg">
-                <h3 className="font-serif text-2xl font-semibold text-neutral-950">
+              <div className="space-y-2.5 max-w-lg">
+                <h3 className="font-serif text-xl sm:text-2xl font-semibold text-neutral-950">
                   ¡Cuestionario Completado!
                 </h3>
                 <p className="font-sans text-sm sm:text-base text-neutral-700 leading-relaxed">
@@ -449,8 +450,8 @@ export default function QuizForm() {
 
               {/* Demo Mode Notice */}
               {demoNotice && (
-                <div className="bg-accent-gold/10 border border-accent-gold/25 px-4 py-2.5 rounded-lg text-neutral-800 text-[11px] font-medium flex items-center space-x-2 max-w-sm">
-                  <AlertCircle className="w-4 h-4 text-accent-gold shrink-0" />
+                <div className="bg-accent-gold/10 border border-accent-gold/25 px-4 py-2 rounded-lg text-neutral-800 text-[10px] font-medium flex items-center space-x-2 max-w-sm mx-auto">
+                  <AlertCircle className="w-3.5 h-3.5 text-accent-gold shrink-0" />
                   <span>Modo Demo: El lead se simuló con éxito (Supabase offline).</span>
                 </div>
               )}
@@ -472,7 +473,7 @@ export default function QuizForm() {
                     email: "",
                   });
                 }}
-                className="cursor-pointer font-sans text-xs font-bold uppercase tracking-wider text-neutral-500 hover:text-neutral-900 border-b border-transparent hover:border-neutral-900 pt-4 transition-colors"
+                className="cursor-pointer font-sans text-xs font-bold uppercase tracking-wider text-neutral-500 hover:text-neutral-900 border-b border-transparent hover:border-neutral-900 pt-3 transition-colors"
               >
                 Configurar otro coche
               </button>
