@@ -74,6 +74,8 @@ export default function Footer() {
                           top: el.offsetTop - 80,
                           behavior: "smooth",
                         });
+                      } else {
+                        window.location.href = `/#${link.id}`;
                       }
                     }}
                     className="hover:text-accent-gold transition-colors"
@@ -82,6 +84,16 @@ export default function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a href="/marketplace" className="hover:text-accent-gold transition-colors font-semibold">
+                  Marketplace C2C
+                </a>
+              </li>
+              <li>
+                <a href="/marketplace/tasacion" className="hover:text-accent-gold transition-colors">
+                  Tasar mi Coche (Plan Renove)
+                </a>
+              </li>
             </ul>
           </div>
 

@@ -2,10 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
+import { LogOut, User, Menu, X, ShieldAlert, PlusCircle } from "lucide-react";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  
+  const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +27,31 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Verificar si es administrador
+  useEffect(() => {
+    async function checkAdmin() {
+      if (!user || !supabase) {
+        setIsAdmin(false);
+        return;
+      }
+      try {
+        const { data } = await supabase
+          .from("profiles")
+          .select("is_admin")
+          .eq("id", user.id)
+          .single();
+        if (data?.is_admin) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (err) {
+        setIsAdmin(false);
+      }
+    }
+    checkAdmin();
+  }, [user]);
 
   const handleScrollTo = (id: string) => {
     setMobileMenuOpen(false);
@@ -33,6 +67,16 @@ export default function Header() {
         top: offsetPosition,
         behavior: "smooth",
       });
+    } else {
+      router.push(`/#${id}`);
+    }
+  };
+
+  const handleLogout = async () => {
+    setMobileMenuOpen(false);
+    if (supabase) {
+      await supabase.auth.signOut();
+      router.push("/");
     }
   };
 
@@ -45,13 +89,10 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        
         {/* LOGO */}
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
+        <Link
+          href="/"
           className="flex items-center space-x-3 group"
         >
           {/* Logo Image */}
@@ -73,26 +114,82 @@ export default function Header() {
               IMPORT
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* CENTRAL LINKS (Desktop) */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden lg:flex items-center space-x-8">
           {["stock", "servicios", "proceso", "media"].map((sec) => (
             <button
               key={sec}
               onClick={() => handleScrollTo(sec)}
-              className="font-sans text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors capitalize cursor-pointer relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-accent-gold after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+              className="font-sans text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors capitalize cursor-pointer relative py-1"
             >
               {sec === "media" ? "Ecosistema" : sec}
             </button>
           ))}
+          
+          {/* Link al Marketplace */}
+          <Link
+            href="/marketplace"
+            className="font-sans text-sm font-bold text-neutral-800 hover:text-accent-gold transition-colors"
+          >
+            Marketplace
+          </Link>
+
+          {/* Enlaces de usuario logueado */}
+          {user && (
+            <>
+              <Link
+                href="/marketplace/mis-anuncios"
+                className="font-sans text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors"
+              >
+                Mi Garaje
+              </Link>
+              <Link
+                href="/marketplace/favoritos"
+                className="font-sans text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors"
+              >
+                Favoritos
+              </Link>
+              {isAdmin && (
+                <Link
+                  href="/marketplace/dashboard"
+                  className="font-sans text-sm font-bold text-red-600 hover:text-red-700 transition-colors flex items-center gap-1"
+                >
+                  <ShieldAlert className="w-4 h-4" /> Moderar
+                </Link>
+              )}
+            </>
+          )}
         </nav>
 
-        {/* RIGHT CTA BUTTON (Desktop) */}
-        <div className="hidden md:block">
+        {/* RIGHT CTA / SESSION ACTIONS (Desktop) */}
+        <div className="hidden lg:flex items-center space-x-4">
+          {user ? (
+            <div className="flex items-center space-x-3">
+              <span className="font-sans text-xs font-semibold text-neutral-500 max-w-[120px] truncate">
+                {user.email}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="cursor-pointer text-neutral-500 hover:text-neutral-900 p-2 border border-neutral-200 rounded-lg transition-colors flex items-center justify-center"
+                title="Cerrar Sesión"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/auth"
+              className="font-sans text-xs font-bold uppercase tracking-wider text-neutral-800 hover:text-neutral-950 py-3 px-5 border border-neutral-300 rounded-lg hover:border-neutral-800 transition-all"
+            >
+              Iniciar Sesión
+            </Link>
+          )}
+
           <button
             onClick={() => handleScrollTo("quiz")}
-            className="cursor-pointer bg-accent-red hover:bg-red-700 text-white font-sans text-xs font-bold tracking-wider uppercase px-6 py-3 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+            className="cursor-pointer bg-neutral-950 hover:bg-neutral-900 text-white font-sans text-xs font-bold tracking-wider uppercase px-6 py-3.5 rounded-lg shadow-md transition-all hover:shadow-lg"
           >
             Buscar mi coche
           </button>
@@ -101,50 +198,84 @@ export default function Header() {
         {/* MOBILE MENU BUTTON */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-neutral-700 hover:text-neutral-900 transition-colors"
+          className="lg:hidden p-2 text-neutral-700 hover:text-neutral-900 transition-colors cursor-pointer"
           aria-label="Toggle Menu"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {mobileMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {/* MOBILE MENU DRAWER */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-neutral-100 shadow-lg absolute top-full left-0 right-0 py-6 px-6 flex flex-col space-y-4 animate-fadeIn">
+        <div className="lg:hidden bg-white border-t border-neutral-100 shadow-xl absolute top-full left-0 right-0 py-6 px-6 flex flex-col space-y-4 animate-fadeIn max-h-[85vh] overflow-y-auto">
           {["stock", "servicios", "proceso", "media"].map((sec) => (
             <button
               key={sec}
               onClick={() => handleScrollTo(sec)}
-              className="text-left font-sans text-base font-semibold text-neutral-700 hover:text-neutral-900 py-2 border-b border-neutral-50 capitalize"
+              className="text-left font-sans text-sm font-semibold text-neutral-700 hover:text-neutral-900 py-2 border-b border-neutral-50 capitalize"
             >
               {sec === "media" ? "Ecosistema de Contenidos" : sec}
             </button>
           ))}
+          
+          <Link
+            href="/marketplace"
+            onClick={() => setMobileMenuOpen(false)}
+            className="font-sans text-sm font-bold text-neutral-700 hover:text-neutral-900 py-2 border-b border-neutral-50"
+          >
+            Catálogo Marketplace
+          </Link>
+
+          {user ? (
+            <>
+              <Link
+                href="/marketplace/mis-anuncios"
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-sans text-sm font-semibold text-neutral-700 hover:text-neutral-900 py-2 border-b border-neutral-50"
+              >
+                Mi Garaje Privado
+              </Link>
+              <Link
+                href="/marketplace/favoritos"
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-sans text-sm font-semibold text-neutral-700 hover:text-neutral-900 py-2 border-b border-neutral-50"
+              >
+                Mis Favoritos
+              </Link>
+              {isAdmin && (
+                <Link
+                  href="/marketplace/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-sans text-sm font-bold text-red-600 hover:text-red-700 py-2 border-b border-neutral-50"
+                >
+                  Panel Moderador (Admin)
+                </Link>
+              )}
+              <div className="flex justify-between items-center py-2">
+                <span className="font-sans text-xs text-neutral-400 truncate max-w-[200px]">
+                  Conectado como {user.email}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="cursor-pointer font-sans text-xs font-bold text-red-600 hover:text-red-800 flex items-center gap-1"
+                >
+                  <LogOut className="w-3.5 h-3.5" /> Cerrar Sesión
+                </button>
+              </div>
+            </>
+          ) : (
+            <Link
+              href="/auth"
+              onClick={() => setMobileMenuOpen(false)}
+              className="font-sans text-sm font-bold text-accent-gold hover:text-amber-500 py-2 border-b border-neutral-50"
+            >
+              Iniciar Sesión
+            </Link>
+          )}
+
           <button
             onClick={() => handleScrollTo("quiz")}
-            className="w-full bg-accent-red hover:bg-red-700 text-white font-sans text-sm font-bold tracking-wider uppercase py-3 rounded-md text-center shadow-md transition-colors"
+            className="w-full bg-neutral-950 hover:bg-neutral-900 text-white font-sans text-xs font-bold tracking-wider uppercase py-3 rounded-lg text-center shadow-md transition-colors"
           >
             Buscar mi coche
           </button>
@@ -153,3 +284,4 @@ export default function Header() {
     </header>
   );
 }
+

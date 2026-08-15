@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond, Cinzel } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -55,8 +56,11 @@ export default function RootLayout({
       className={`${inter.variable} ${cormorant.variable} ${cinzel.variable} scroll-smooth h-full antialiased`}
     >
       <body className="min-h-full flex flex-col selection:bg-accent-gold/30 selection:text-neutral-900 bg-white text-neutral-900">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
 }
+
