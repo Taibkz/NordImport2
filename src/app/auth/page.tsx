@@ -41,7 +41,7 @@ export default function AuthPage() {
       });
       if (error) throw error;
     } catch (err: any) {
-      setMessage(err.message);
+      setMessage(err?.message || err?.error_description || (typeof err === "object" ? JSON.stringify(err) : String(err)));
       setLoading(false);
     }
   };
@@ -111,7 +111,7 @@ export default function AuthPage() {
         }, 1000);
       }
     } catch (err: any) {
-      setMessage(err.message);
+      setMessage(err?.message || err?.error_description || (typeof err === "object" ? JSON.stringify(err) : String(err)));
     } finally {
       setLoading(false);
     }
