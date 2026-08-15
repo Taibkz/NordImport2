@@ -20,24 +20,28 @@ export default function AuthPage() {
   const [phone, setPhone] = useState("");
   
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleGoogleLogin = async () => {
-    if (!isSupabaseConfigured || !supabase) { 
-      setMessage("Supabase no está configurado (Modo Demo activo)."); 
-      return; 
+  const handleOAuth = async (provider: "google" | "apple" | "facebook") => {
+    if (!isSupabaseConfigured || !supabase) {
+      setMessage(`Autenticación con ${provider} simulada con éxito (Modo Demo).`);
+      setTimeout(() => {
+        router.push("/marketplace");
+      }, 1000);
+      return;
     }
-    setGoogleLoading(true);
+    setLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: { redirectTo: window.location.origin },
+        provider,
+        options: {
+          redirectTo: window.location.origin,
+        },
       });
       if (error) throw error;
     } catch (err: any) {
       setMessage(err.message);
-      setGoogleLoading(false);
+      setLoading(false);
     }
   };
 
@@ -139,23 +143,55 @@ export default function AuthPage() {
           {/* Formulario */}
           <form onSubmit={handleAuth} className="space-y-4">
             
-            {/* Google Login (OAuth) */}
+            {/* Social Logins (OAuth) */}
             {mode !== "forgot" && (
               <div className="space-y-4 mb-4">
-                <button
-                  type="button"
-                  onClick={handleGoogleLogin}
-                  disabled={googleLoading || loading}
-                  className="cursor-pointer w-full flex items-center justify-center gap-2 py-3 border border-neutral-300 rounded-xl font-sans text-xs font-bold text-neutral-700 bg-white hover:bg-neutral-50 transition-colors shadow-2xs"
-                >
-                  <svg width="16" height="16" viewBox="0 0 48 48" className="shrink-0">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                  </svg>
-                  <span>{googleLoading ? "Redirigiendo..." : "Continuar con Google"}</span>
-                </button>
+                <span className="block font-sans text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">
+                  Iniciar sesión con:
+                </span>
+                <div className="grid grid-cols-3 gap-3">
+                  {/* Google */}
+                  <button
+                    type="button"
+                    onClick={() => handleOAuth("google")}
+                    disabled={loading}
+                    className="cursor-pointer flex items-center justify-center py-3 border border-neutral-200 rounded-xl bg-white hover:bg-neutral-50 transition-colors shadow-2xs"
+                    title="Google"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 48 48">
+                      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    </svg>
+                  </button>
+
+                  {/* Apple */}
+                  <button
+                    type="button"
+                    onClick={() => handleOAuth("apple")}
+                    disabled={loading}
+                    className="cursor-pointer flex items-center justify-center py-3 border border-neutral-200 rounded-xl bg-white hover:bg-neutral-50 transition-colors shadow-2xs"
+                    title="Apple"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C3.79 16.2 3.03 9.4 6.78 5.76c1.88-1.83 4-1.84 5.37-1.16 1.42.7 2.22.68 3.56 0 1.25-.63 3.4-.78 4.96.88-3.17 1.83-2.65 6.22.42 7.5-1.3 3.32-3.06 6.37-4.04 7.3zM15.47 1.05c2.7.2 4.14 2.66 3.75 5.35-2.58.28-4.75-2.08-3.75-5.35z"/>
+                    </svg>
+                  </button>
+
+                  {/* Facebook */}
+                  <button
+                    type="button"
+                    onClick={() => handleOAuth("facebook")}
+                    disabled={loading}
+                    className="cursor-pointer flex items-center justify-center py-3 border border-neutral-200 rounded-xl bg-white hover:bg-neutral-50 transition-colors shadow-2xs"
+                    title="Facebook"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                  </button>
+                </div>
                 <div className="flex items-center gap-3">
                   <hr className="flex-grow border-neutral-200" />
                   <span className="font-sans text-[9px] font-bold text-neutral-400 uppercase tracking-widest">o mediante correo</span>
