@@ -21,6 +21,7 @@ export default function AuthPage() {
   
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const handleOAuth = async (provider: "google" | "apple" | "facebook") => {
     if (!isSupabaseConfigured || !supabase) {
@@ -99,7 +100,7 @@ export default function AuthPage() {
           throw new Error("Este correo ya pertenece a un perfil registrado.");
         }
         
-        setMessage("¡Bienvenido! Por favor, verifica tu correo en el email enviado para confirmar tu identidad.");
+        setIsRegistered(true);
       } else if (mode === "login") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
@@ -122,23 +123,46 @@ export default function AuthPage() {
       <main className="flex-grow bg-neutral-50 flex items-center justify-center py-12 px-6 min-h-[85vh]">
         <div className="w-full max-w-[520px] bg-white border border-neutral-200/60 shadow-2xl rounded-2xl p-6 sm:p-10">
           
-          {/* Cabecera del formulario */}
-          <div className="text-center mb-8">
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900">
-              {mode === "login" 
-                ? "Iniciar Sesión" 
-                : mode === "register" 
-                  ? "Crear Cuenta" 
-                  : "Recuperar Contraseña"}
-            </h2>
-            <p className="font-sans text-xs text-neutral-400 mt-2">
-              {mode === "login" 
-                ? "Introduce tus credenciales de acceso privadas." 
-                : mode === "register" 
-                  ? "Únete a la red comercial de NordImport 2.0." 
-                  : "Envío automático de correo para restablecer la contraseña."}
-            </p>
-          </div>
+          {isRegistered ? (
+            <div className="text-center py-6 space-y-6 animate-fadeIn">
+              <div className="w-16 h-16 bg-accent-gold/10 border border-accent-gold/30 rounded-full flex items-center justify-center mx-auto text-accent-gold shadow-sm">
+                <Mail className="w-8 h-8 animate-pulse" />
+              </div>
+              <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900">
+                Verifica tu Correo
+              </h2>
+              <p className="font-sans text-sm text-neutral-500 leading-relaxed max-w-sm mx-auto">
+                Hemos enviado un correo de activación a <strong className="text-neutral-900">{email}</strong>. 
+                Por favor, abre el enlace del correo para validar tu cuenta comercial.
+              </p>
+              <div className="pt-6 border-t border-neutral-100 flex flex-col gap-3">
+                <button
+                  onClick={() => setIsRegistered(false)}
+                  className="cursor-pointer bg-neutral-950 hover:bg-neutral-900 text-white font-sans text-xs font-bold uppercase tracking-widest py-3.5 px-6 rounded-xl transition-all"
+                >
+                  Volver al Login
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Cabecera del formulario */}
+              <div className="text-center mb-8">
+                <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900">
+                  {mode === "login" 
+                    ? "Iniciar Sesión" 
+                    : mode === "register" 
+                      ? "Crear Cuenta" 
+                      : "Recuperar Contraseña"}
+                </h2>
+                <p className="font-sans text-xs text-neutral-400 mt-2">
+                  {mode === "login" 
+                    ? "Introduce tus credenciales de acceso privadas." 
+                    : mode === "register" 
+                      ? "Únete a la red comercial de NordImport 2.0." 
+                      : "Envío automático de correo para restablecer la contraseña."}
+                </p>
+              </div>
 
           {/* Formulario */}
           <form onSubmit={handleAuth} className="space-y-4">
@@ -355,6 +379,8 @@ export default function AuthPage() {
               {mode === "login" ? "Regístrate gratis" : "Inicia sesión aquí"}
             </button>
           </div>
+        </>
+      )}
 
         </div>
       </main>
