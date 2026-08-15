@@ -71,6 +71,8 @@ create table if not exists public.cars (
   transmission text,
   province text,
   status text default 'pending', -- 'pending', 'approved', 'sold'
+  views integer default 0,
+  shares integer default 0,
   seller_id uuid references public.profiles(id) on delete cascade
 );
 
@@ -113,6 +115,25 @@ create table if not exists public.dictionary_brands (
   brand text not null unique,
   models text[] not null default '{}'
 );
+
+-- Funciones RPC para estadísticas del marketplace (Incrementadores de vistas y compartidos)
+create or replace function public.increment_car_view(target_id uuid)
+returns void as $$
+begin
+  update public.cars
+  set views = coalesce(views, 0) + 1
+  where id = target_id;
+end;
+$$ language plpgsql security definer;
+
+create or replace function public.increment_car_share(target_id uuid)
+returns void as $$
+begin
+  update public.cars
+  set shares = coalesce(shares, 0) + 1
+  where id = target_id;
+end;
+$$ language plpgsql security definer;
 
 -- Habilitar RLS (Row Level Security)
 alter table public.profiles enable row level security;
@@ -164,3 +185,13 @@ values
   ('Audi', 'RS6 Avant TFSI V8 Quattro', 124500, 2022, 38000, 'Gasolina (MHEV)', 'ECO', array['/cars/audi_rs6.jpg'], 'https://www.carfax.es', true),
   ('Mercedes-Benz', 'G-Class G 63 AMG V8 BiTurbo', 198000, 2022, 19500, 'Gasolina', 'C', array['/cars/g63.jpg'], 'https://www.carfax.es', true)
 on conflict do nothing;
+
+-- SEED DATA DICCIONARIO DE MARCAS Y MODELOS
+insert into public.dictionary_brands (brand, models)
+values
+  ('Audi', array['A3', 'A4', 'A5', 'A6', 'Q3', 'Q5', 'Q7', 'e-tron', 'R8', 'RS3', 'RS6']),
+  ('BMW', array['Serie 1', 'Serie 3', 'Serie 4', 'Serie 5', 'X1', 'X3', 'X5', 'i4', 'M2', 'M4', 'M5']),
+  ('Porsche', array['911 Carrera', 'Cayenne', 'Macan', 'Panamera', 'Taycan', '718 Cayman', '718 Boxster']),
+  ('Mercedes-Benz', '{"Clase A", "Clase C", "Clase E", "GLA", "GLC", "GLE", "EQE", "AMG GT", "Clase G"}'),
+  ('Volkswagen', '{"Golf", "Polo", "Tiguan", "Touareg", "ID.4", "ID.Buzz", "T-Roc"}')
+on conflict (brand) do update set models = excluded.models;
