@@ -114,7 +114,7 @@ export default function QuizForm() {
   };
 
   return (
-    <section id="quiz" className="py-20 lg:py-24 bg-slate-50 border-t border-b border-neutral-100">
+    <section id="quiz" className="py-16 lg:h-screen lg:snap-start lg:flex lg:flex-col lg:justify-center lg:py-0 bg-slate-50 border-t border-b border-neutral-100">
       <div className="max-w-3xl mx-auto px-6">
         
         {/* Section Title */}

@@ -33,7 +33,7 @@ export default function MediaFeed() {
   ];
 
   return (
-    <section id="media" className="py-20 lg:py-24 bg-white">
+    <section id="media" className="py-16 lg:h-screen lg:snap-start lg:flex lg:flex-col lg:justify-center lg:py-0 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16 flex flex-col items-center">

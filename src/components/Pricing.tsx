@@ -91,50 +91,64 @@ export default function Pricing() {
   };
 
   return (
-    <section id="precios" className="py-20 lg:py-24 bg-neutral-50 border-t border-b border-neutral-100">
+    <section id="precios" className="py-16 lg:h-screen lg:snap-start lg:flex lg:flex-col lg:justify-center lg:py-0 bg-neutral-50 border-t border-b border-neutral-100">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Section Title */}
-        <div className="text-center mb-16 flex flex-col items-center">
-          <span className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent-gold mb-3 flex items-center gap-1.5">
+        <div className="text-center mb-8 lg:mb-10 flex flex-col items-center">
+          <span className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent-gold mb-2 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" />
             Tarifas Claras y Transparentes
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-neutral-900 mb-4">
+          <h2 className="font-serif text-2xl lg:text-3xl font-normal tracking-tight text-neutral-900 mb-3">
             Servicios y Tarifas
           </h2>
-          <div className="h-[2px] w-12 bg-accent-gold mb-4" />
+          <div className="h-[2px] w-12 bg-accent-gold mb-3" />
           <p className="font-sans text-xs sm:text-sm text-neutral-600 max-w-xl leading-relaxed">
-            Sin comisiones ocultas ni sorpresas. Elige el nivel de servicio que mejor se adapte a tus necesidades para importar tu coche premium.
+            Sin comisiones ocultas ni sorpresas. Elige el nivel de servicio que mejor se adapte a tus necesidades.
           </p>
         </div>
 
-        {/* Pricing Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        {/* Pricing Cards:
+            - Móvil: carrusel horizontal con swipe (snap-x)
+            - Desktop: grid de 4 columnas normal */}
+        <div className="
+          flex overflow-x-auto gap-4 pb-4 -mx-6 px-6
+          snap-x snap-mandatory scroll-smooth
+          lg:mx-0 lg:px-0 lg:pb-0
+          lg:grid lg:grid-cols-4 lg:overflow-x-visible
+          lg:gap-6
+        ">
           {plans.map((plan, idx) => (
             <div
               key={idx}
-              className={`flex flex-col justify-between border-2 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 ${plan.color}`}
+              className={`
+                shrink-0 w-[78vw] sm:w-[60vw] snap-center
+                lg:w-auto lg:shrink lg:snap-align-none
+                flex flex-col justify-between border-2 rounded-2xl p-5 transition-all duration-300 lg:hover:-translate-y-1
+                ${plan.popular ? "relative" : ""}
+                ${plan.color}
+              `}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-red text-white font-sans text-[9px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-red text-white font-sans text-[9px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md whitespace-nowrap">
                   Más Popular
                 </div>
               )}
 
               <div>
                 {/* Header Card */}
-                <div className="mb-6">
-                  <h3 className="font-serif text-base font-bold text-neutral-900 mb-2 leading-tight">
+                <div className="mb-4">
+                  <h3 className="font-serif text-sm font-bold text-neutral-900 mb-1.5 leading-tight">
                     {plan.name}
                   </h3>
-                  <p className="font-sans text-[11px] text-neutral-500 leading-relaxed min-h-[48px]">
+                  <p className="font-sans text-[10px] text-neutral-500 leading-relaxed">
                     {plan.description}
                   </p>
                   
                   {/* Price */}
-                  <div className="mt-4 flex items-baseline">
-                    <span className="font-display text-3xl font-extrabold text-neutral-900 tracking-tight">
+                  <div className="mt-3 flex items-baseline">
+                    <span className="font-display text-2xl font-extrabold text-neutral-900 tracking-tight">
                       {plan.price}
                     </span>
                     <span className="font-sans text-xs text-neutral-400 ml-1 font-semibold">
@@ -144,15 +158,15 @@ export default function Pricing() {
                 </div>
 
                 {/* Features List */}
-                <ul className="space-y-3 mb-8 border-t border-neutral-100 pt-6">
+                <ul className="space-y-2 mb-5 border-t border-neutral-100 pt-4">
                   {plan.features.map((feature, fIdx) => (
-                    <li key={fIdx} className="flex items-start gap-2.5">
-                      <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
+                    <li key={fIdx} className="flex items-start gap-2">
+                      <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
                         plan.popular ? "bg-accent-red/10 text-accent-red" : "bg-neutral-100 text-neutral-600"
                       }`}>
-                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        <Check className="w-2 h-2 stroke-[3]" />
                       </div>
-                      <span className="font-sans text-xs text-neutral-600 leading-tight">
+                      <span className="font-sans text-[10px] text-neutral-600 leading-tight">
                         {feature}
                       </span>
                     </li>
@@ -163,7 +177,7 @@ export default function Pricing() {
               {/* Call to action */}
               <button
                 onClick={() => handlePlanClick(plan.whatsAppText)}
-                className={`cursor-pointer w-full py-3 rounded-xl font-sans text-xs font-bold uppercase tracking-wider text-center transition-all duration-200 ${
+                className={`cursor-pointer w-full py-2.5 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider text-center transition-all duration-200 ${
                   plan.popular
                     ? "bg-neutral-950 hover:bg-neutral-800 text-white shadow-lg shadow-neutral-950/15"
                     : "bg-white border border-neutral-300 hover:border-neutral-400 text-neutral-800"
@@ -176,10 +190,10 @@ export default function Pricing() {
         </div>
 
         {/* Bottom Trust Badge */}
-        <div className="mt-12 bg-white border border-neutral-200/60 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto">
+        <div className="mt-6 bg-white border border-neutral-200/60 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 max-w-4xl mx-auto">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-accent-gold/10 flex items-center justify-center text-accent-gold shrink-0">
-              <Shield className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-full bg-accent-gold/10 flex items-center justify-center text-accent-gold shrink-0">
+              <Shield className="w-4 h-4" />
             </div>
             <div>
               <h4 className="font-serif text-xs font-bold text-neutral-900 uppercase tracking-wider">
