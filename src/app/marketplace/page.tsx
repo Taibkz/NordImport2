@@ -17,13 +17,71 @@ import {
   SearchFilters
 } from "@/lib/marketplace/constants";
 import { SlidersHorizontal, X, Search, ChevronDown, ArrowUpDown, RotateCcw, Check, Sparkles, AlertCircle } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function MarketplacePage() {
+  const { user, profile, refreshProfile } = useAuth();
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
   const [demoMode, setDemoMode] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [filters, setFilters] = useState<SearchFilters>(FILTER_DEFAULTS);
+
+  // Perfil comercial incompleto modal states
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [profilePhone, setProfilePhone] = useState("");
+  const [profileFirstName, setProfileFirstName] = useState("");
+  const [profileLastName, setProfileLastName] = useState("");
+  const [profileUsername, setProfileUsername] = useState("");
+  const [updatingProfile, setUpdatingProfile] = useState(false);
+
+  // Detectar perfil incompleto (sin teléfono) al iniciar sesión por ejemplo con Google
+  useEffect(() => {
+    if (user && profile && !profile.phone && !profileModalOpen) {
+      setProfileFirstName(profile.first_name || user.user_metadata?.full_name?.split(" ")[0] || "");
+      setProfileLastName(profile.last_name || user.user_metadata?.full_name?.split(" ").slice(1).join(" ") || "");
+      setProfileUsername(profile.username || "");
+      setProfileModalOpen(true);
+    }
+  }, [user, profile, profileModalOpen]);
+
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!profilePhone) {
+      alert("Por favor, introduce tu número de teléfono.");
+      return;
+    }
+    setUpdatingProfile(true);
+
+    if (!isSupabaseConfigured || !supabase || !user) {
+      setProfileModalOpen(false);
+      setUpdatingProfile(false);
+      return;
+    }
+
+    try {
+      const generatedUsername = profileUsername || `${profileFirstName.toLowerCase()}_${Math.floor(Math.random() * 10000)}`;
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          first_name: profileFirstName,
+          last_name: profileLastName,
+          phone: profilePhone,
+          username: generatedUsername,
+        })
+        .eq("id", user.id);
+
+      if (error) throw error;
+
+      await refreshProfile();
+      setProfileModalOpen(false);
+      alert("¡Perfil completado con éxito! Ya puedes utilizar todas las funciones.");
+    } catch (err: any) {
+      alert(`Error al guardar el perfil: ${err.message}`);
+    } finally {
+      setUpdatingProfile(false);
+    }
+  };
   const [dbBrandsList, setDbBrandsList] = useState<string[]>([]);
   const [dbBrandsMap, setDbBrandsMap] = useState<Record<string, string[]>>({});
 
@@ -606,6 +664,82 @@ export default function MarketplacePage() {
           )}
         </div>
 
+        {/* MODAL COMPLETAR PERFIL COMERCIAL (Para logins sociales como Google) */}
+        {profileModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/60 backdrop-blur-sm p-4 animate-fadeIn">
+            <div className="w-full max-w-[480px] bg-white border border-neutral-200 shadow-2xl rounded-2xl p-6 sm:p-8 animate-scaleIn">
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 bg-accent-gold/10 border border-accent-gold/30 rounded-full flex items-center justify-center mx-auto text-accent-gold mb-3">
+                  <Sparkles className="w-6 h-6 animate-pulse" />
+                </div>
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-neutral-900">
+                  Completa tu Perfil
+                </h3>
+                <p className="font-sans text-xs text-neutral-500 mt-2 leading-relaxed">
+                  Para poder vender coches, guardar favoritos o contactar con otros miembros, necesitamos completar tu información comercial.
+                </p>
+              </div>
+
+              <form onSubmit={handleSaveProfile} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">Nombre *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ej. Bruce"
+                      value={profileFirstName}
+                      onChange={(e) => setProfileFirstName(e.target.value)}
+                      className="w-full font-sans text-xs border border-neutral-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-accent-gold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">Apellido *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ej. Wayne"
+                      value={profileLastName}
+                      onChange={(e) => setProfileLastName(e.target.value)}
+                      className="w-full font-sans text-xs border border-neutral-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-accent-gold"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">Teléfono Comercial *</label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="Ej. +34 600 000 000"
+                    value={profilePhone}
+                    onChange={(e) => setProfilePhone(e.target.value)}
+                    className="w-full font-sans text-xs border border-neutral-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-accent-gold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-sans text-[10px] font-bold text-neutral-700 uppercase tracking-wider mb-2">Nombre de Usuario (Opcional)</label>
+                  <input
+                    type="text"
+                    placeholder="Ej. bruce_wayne"
+                    value={profileUsername}
+                    onChange={(e) => setProfileUsername(e.target.value)}
+                    className="w-full font-sans text-xs border border-neutral-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-accent-gold"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={updatingProfile}
+                  className="cursor-pointer w-full bg-neutral-950 hover:bg-neutral-900 text-white py-3.5 rounded-xl font-sans text-xs font-bold uppercase tracking-wider transition-colors text-center disabled:bg-neutral-400 mt-2 block"
+                >
+                  {updatingProfile ? "Guardando..." : "Guardar Perfil Comercial"}
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
       </main>
       <Footer />
     </>

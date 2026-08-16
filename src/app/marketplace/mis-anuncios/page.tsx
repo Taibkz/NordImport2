@@ -120,7 +120,7 @@ export default function MisAnunciosPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow bg-neutral-50 pt-[72px] lg:pt-[80px] pb-12 min-h-screen">
+      <main className="flex-grow bg-neutral-50 pt-[96px] lg:pt-[116px] pb-12 min-h-screen">
         <div className="max-w-7xl mx-auto px-6">
           
           {/* Header Fila */}

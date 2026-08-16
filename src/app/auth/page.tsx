@@ -41,7 +41,8 @@ export default function AuthPage() {
       });
       if (error) throw error;
     } catch (err: any) {
-      setMessage(err?.message || err?.error_description || (typeof err === "object" ? JSON.stringify(err) : String(err)));
+      const msg = err?.message || err?.error_description || (err?.toString && err.toString() !== "[object Object]" ? err.toString() : "");
+      setMessage(msg === "{}" || !msg ? "Error de conexión o autenticación simulada en progreso." : msg);
       setLoading(false);
     }
   };
@@ -111,7 +112,8 @@ export default function AuthPage() {
         }, 1000);
       }
     } catch (err: any) {
-      setMessage(err?.message || err?.error_description || (typeof err === "object" ? JSON.stringify(err) : String(err)));
+      const msg = err?.message || err?.error_description || (err?.toString && err.toString() !== "[object Object]" ? err.toString() : "");
+      setMessage(msg === "{}" || !msg ? "Error en el servidor de correo o límite de envíos superado. Por favor, verifica tu configuración de SMTP o inténtalo más tarde." : msg);
     } finally {
       setLoading(false);
     }

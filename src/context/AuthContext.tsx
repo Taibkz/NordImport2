@@ -6,14 +6,52 @@ import { User } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
+  profile: any | null;
   loading: boolean;
+  refreshProfile: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>({ user: null, loading: true });
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  profile: null,
+  loading: true,
+  refreshProfile: async () => {},
+});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const fetchProfile = async (userId: string) => {
+    if (!supabase) return;
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", userId)
+        .single();
+      if (!error && data) {
+        setProfile(data);
+      }
+    } catch (err) {
+      console.error("Error fetching user profile:", err);
+    }
+  };
+
+  const refreshProfile = async () => {
+    if (user) {
+      await fetchProfile(user.id);
+    }
+  };
+
+  useEffect(() => {
+    if (!user) {
+      setProfile(null);
+      return;
+    }
+    fetchProfile(user.id);
+  }, [user]);
 
   useEffect(() => {
     if (!supabase) {
@@ -43,7 +81,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, profile, loading, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );

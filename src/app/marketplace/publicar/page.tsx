@@ -7,7 +7,7 @@ export default function PublicarVehiculoPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow bg-neutral-50 min-h-screen pt-[72px] lg:pt-[80px] pb-6">
+      <main className="flex-grow bg-neutral-50 min-h-screen pt-[96px] lg:pt-[116px] pb-6">
         <PublishForm />
       </main>
       <Footer />
