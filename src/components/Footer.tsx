@@ -29,14 +29,22 @@ export default function Footer() {
             Especialistas en la localización, inspección y transporte de vehículos premium y superdeportivos desde Alemania y el norte de Europa hacia España.
           </p>
           <div className="flex space-x-4">
-            {["instagram", "tiktok", "youtube"].map((network) => (
+            {[
+              { name: "instagram", url: "#" },
+              { name: "tiktok", url: "#" },
+              { name: "youtube", url: "#" },
+            ].map((network) => (
               <a
-                key={network}
-                href="#"
-                className="w-8 h-8 rounded-full bg-neutral-800 hover:bg-accent-gold hover:text-neutral-900 transition-colors flex items-center justify-center text-xs font-semibold text-white uppercase"
-                title={network}
+                key={network.name}
+                href={network.url}
+                className="w-8 h-8 rounded-full bg-neutral-800 hover:bg-accent-gold transition-all flex items-center justify-center p-2.5 hover:scale-110 active:scale-95 group"
+                title={network.name}
               >
-                {network.substring(0, 2)}
+                <img
+                  src={`/social/${network.name}.png`}
+                  alt={network.name}
+                  className="w-full h-full object-contain filter brightness-100 group-hover:brightness-0"
+                />
               </a>
             ))}
           </div>
