@@ -58,9 +58,10 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 font-sans text-xs">
               {[
-                { label: "Catálogo Stock", id: "stock" },
                 { label: "Servicios a la carta", id: "servicios" },
                 { label: "Nuestro proceso", id: "proceso" },
+                { label: "Tarifas y Planes", id: "precios" },
+                { label: "Catálogo Stock", id: "stock" },
                 { label: "Ecosistema social", id: "media" },
               ].map((link, idx) => (
                 <li key={idx}>

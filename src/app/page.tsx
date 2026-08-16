@@ -7,6 +7,7 @@ import Services from "@/components/Services";
 import Process from "@/components/Process";
 import MediaFeed from "@/components/MediaFeed";
 import QuizForm from "@/components/QuizForm";
+import Pricing from "@/components/Pricing";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         <ImportSimulator />
         <Services />
         <Process />
+        <Pricing />
         <StockGrid />
         <MediaFeed />
         <QuizForm />
