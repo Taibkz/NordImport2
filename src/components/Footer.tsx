@@ -18,7 +18,7 @@ export default function Footer() {
           <div className="flex items-center space-x-3">
             <div className="relative w-44 h-16">
               <Image
-                src="/logo.png"
+                src="/logo_with_background.png"
                 alt="NORD IMPORT Logo"
                 fill
                 className="object-contain object-left"
