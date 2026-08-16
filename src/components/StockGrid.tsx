@@ -263,6 +263,16 @@ export default function StockGrid() {
               <div className="w-1 h-1 rounded-full bg-neutral-300" />
               <span className="font-sans text-[9px] text-neutral-400 font-semibold tracking-wider uppercase ml-2">Desliza para ver más</span>
             </div>
+
+            {/* Botón Mostrar Más */}
+            <div className="text-center mt-12">
+              <a
+                href="/marketplace"
+                className="cursor-pointer bg-neutral-950 hover:bg-neutral-900 text-white font-sans text-xs font-bold uppercase tracking-widest py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl inline-block"
+              >
+                Mostrar más
+              </a>
+            </div>
           </div>
         )}
       </div>

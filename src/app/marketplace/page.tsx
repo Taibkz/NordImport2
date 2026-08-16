@@ -176,7 +176,7 @@ export default function MarketplacePage() {
   return (
     <>
       <Header />
-      <main className="flex-grow bg-neutral-50 relative min-h-screen">
+      <main className="flex-grow bg-neutral-50 relative min-h-screen pt-[72px] lg:pt-[80px]">
         
         {/* Banner Informativo Modo Demo */}
         {demoMode && (
@@ -187,40 +187,40 @@ export default function MarketplacePage() {
         )}
 
         {/* HERO HEADER */}
-        <div className="bg-neutral-950 text-white py-16 relative overflow-hidden">
+        <div className="bg-neutral-950 text-white py-12 lg:py-16 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-900 via-neutral-950 to-neutral-950 pointer-events-none" />
           <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
             <span className="font-sans text-xs font-bold uppercase tracking-[0.25em] text-accent-gold mb-3 block">
               Marketplace Exclusivo
             </span>
-            <h1 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+            <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
               Encuentra Unidades Únicas en España
             </h1>
-            <p className="font-sans text-sm sm:text-base text-neutral-400 max-w-xl mx-auto">
+            <p className="font-sans text-xs sm:text-base text-neutral-400 max-w-xl mx-auto">
               Compra y vende vehículos de alta gama directamente entre particulares con la seguridad y el respaldo técnico de NordImport.
             </p>
           </div>
         </div>
 
         {/* STICKY SEARCH & QUICK FILTERS ROW */}
-        <div className="sticky top-0 z-30 bg-white border-b border-neutral-200 shadow-sm">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex flex-wrap items-center gap-3">
+        <div className="sticky top-[72px] lg:top-[80px] z-30 bg-white border-b border-neutral-200 shadow-sm transition-all duration-300">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-3">
             
             {/* Buscador de texto */}
-            <div className="relative flex-grow min-w-[240px]">
+            <div className="relative flex-grow">
               <Search className="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 name="search"
                 value={filters.search}
                 onChange={handleFilterChange}
-                placeholder="Buscar marca, modelo o extras..."
-                className="w-full font-sans text-sm border border-neutral-300 rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-accent-gold bg-neutral-50/50 focus:bg-white transition-all"
+                placeholder="Buscar marca o modelo..."
+                className="w-full font-sans text-xs border border-neutral-300 rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-accent-gold bg-neutral-50/50 focus:bg-white transition-all text-neutral-800 font-semibold"
               />
             </div>
 
-            {/* Quick Select Brand */}
-            <div className="relative">
+            {/* Quick Select Brand (Oculto en móvil) */}
+            <div className="relative hidden lg:block">
               <select
                 name="brand"
                 value={filters.brand}
@@ -235,8 +235,8 @@ export default function MarketplacePage() {
               <ChevronDown className="w-3.5 h-3.5 text-neutral-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
 
-            {/* Quick Select Province */}
-            <div className="relative">
+            {/* Quick Select Province (Oculto en móvil) */}
+            <div className="relative hidden lg:block">
               <select
                 name="province"
                 value={filters.province}
@@ -251,8 +251,8 @@ export default function MarketplacePage() {
               <ChevronDown className="w-3.5 h-3.5 text-neutral-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
 
-            {/* Ordenación */}
-            <div className="relative">
+            {/* Ordenación (Oculto en móvil) */}
+            <div className="relative hidden sm:block">
               <select
                 name="sortBy"
                 value={filters.sortBy}
@@ -272,21 +272,22 @@ export default function MarketplacePage() {
             {/* Botón Filtros Drawer */}
             <button
               onClick={() => setDrawerOpen(true)}
-              className={`cursor-pointer inline-flex items-center gap-2 px-5 py-2.5 border rounded-lg font-sans text-xs font-bold transition-all ${
+              className={`cursor-pointer inline-flex items-center gap-2 px-4 py-2.5 border rounded-lg font-sans text-xs font-bold transition-all shrink-0 ${
                 activeFilterCount > 0
                   ? "bg-accent-gold border-accent-gold text-neutral-950 shadow-md"
                   : "bg-white border-neutral-300 hover:border-neutral-400 text-neutral-800"
               }`}
             >
               <SlidersHorizontal className="w-4 h-4" />
-              <span>Filtros {activeFilterCount > 0 ? `(${activeFilterCount})` : ""}</span>
+              <span className="hidden sm:inline">Filtros</span>
+              <span>{activeFilterCount > 0 ? `(${activeFilterCount})` : ""}</span>
             </button>
 
             {/* Limpiar filtros rápidos */}
             {activeFilterCount > 0 && (
               <button
                 onClick={resetFilters}
-                className="cursor-pointer inline-flex items-center gap-1 px-3 py-2 font-sans text-[11px] font-bold text-neutral-400 hover:text-neutral-900 transition-colors"
+                className="cursor-pointer inline-flex items-center gap-1 px-2.5 py-2 font-sans text-[10px] font-bold text-neutral-400 hover:text-neutral-900 transition-colors shrink-0"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Limpiar</span>

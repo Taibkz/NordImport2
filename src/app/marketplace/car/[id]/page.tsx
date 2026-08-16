@@ -226,7 +226,7 @@ export default function CarDetailPage({ params }: PageProps) {
   return (
     <>
       <Header />
-      <main className="flex-grow bg-neutral-50 py-10 lg:py-16">
+      <main className="flex-grow bg-neutral-50 pt-[72px] lg:pt-[80px] pb-10 lg:pb-16">
         <div className="max-w-7xl mx-auto px-6">
           
           {/* Volver a catálogo */}

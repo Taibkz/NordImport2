@@ -16,9 +16,9 @@ export default function Home() {
       <main className="flex-grow bg-white">
         <Hero />
         <ImportSimulator />
-        <StockGrid />
         <Services />
         <Process />
+        <StockGrid />
         <MediaFeed />
         <QuizForm />
       </main>

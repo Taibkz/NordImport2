@@ -112,7 +112,7 @@ export default function DashboardPage() {
     return (
       <>
         <Header />
-        <main className="flex-grow bg-neutral-50 py-24 flex items-center justify-center px-6">
+        <main className="flex-grow bg-neutral-50 pt-[96px] lg:pt-[120px] pb-24 flex items-center justify-center px-6">
           <div className="max-w-md mx-auto text-center space-y-6 bg-white border border-neutral-200 p-10 rounded-2xl shadow-xl">
             <ShieldAlert className="w-16 h-16 text-red-600 mx-auto animate-bounce" />
             <h1 className="font-display text-3xl font-bold tracking-tight text-red-600">
@@ -137,7 +137,7 @@ export default function DashboardPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow bg-neutral-50 py-12 min-h-screen">
+      <main className="flex-grow bg-neutral-50 pt-[72px] lg:pt-[80px] pb-12 min-h-screen">
         <div className="max-w-7xl mx-auto px-6">
           
           {/* Fila Cabecera */}

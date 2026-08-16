@@ -96,23 +96,14 @@ export default function Header() {
           className="flex items-center space-x-3 group"
         >
           {/* Logo Image */}
-          <div className="relative w-12 h-12 overflow-hidden rounded-md bg-neutral-50 flex items-center justify-center border border-neutral-100 shadow-xs transition-transform group-hover:scale-105">
+          <div className="relative w-32 h-10 sm:w-44 sm:h-14 transition-transform group-hover:scale-105">
             <Image
               src="/logo.png"
               alt="NORD IMPORT Logo"
               fill
               priority
-              className="object-contain p-1"
+              className="object-contain object-left"
             />
-          </div>
-          {/* Logo Text Styling */}
-          <div className="flex flex-col justify-center">
-            <span className="font-display text-lg tracking-[0.25em] font-bold text-neutral-900 leading-none">
-              N O R D
-            </span>
-            <span className="font-sans text-[9px] tracking-[0.3em] font-bold text-accent-gold mt-1 leading-none">
-              IMPORT
-            </span>
           </div>
         </Link>
 

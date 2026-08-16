@@ -77,20 +77,28 @@ export default function ImportSimulator() {
 
             {/* Precio Base en Origen */}
             <div>
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between items-center mb-3">
                 <label className="font-sans text-xs font-bold text-neutral-300 uppercase tracking-wider flex items-center gap-1.5">
                   Precio del coche en Europa (origen)
                   <span title="Precio de venta anunciado en Mobile.de, Autoscout24, etc.">
                     <HelpCircle className="w-3.5 h-3.5 text-neutral-500 cursor-help" />
                   </span>
                 </label>
-                <span className="font-sans text-lg font-bold text-accent-gold">
-                  {basePrice.toLocaleString("es-ES")} €
-                </span>
+                <div className="flex items-center gap-1.5 bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-1.5 focus-within:border-accent-gold transition-colors">
+                  <input
+                    type="number"
+                    min="1000"
+                    max="1000000"
+                    value={basePrice || ""}
+                    onChange={(e) => setBasePrice(Number(e.target.value))}
+                    className="bg-transparent text-right font-sans text-sm font-bold text-accent-gold outline-none w-20 sm:w-24 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none border-none p-0"
+                  />
+                  <span className="font-sans text-sm font-bold text-accent-gold">€</span>
+                </div>
               </div>
               <input
                 type="range"
-                min="10000"
+                min="1000"
                 max="250000"
                 step="1000"
                 value={basePrice}
@@ -98,23 +106,32 @@ export default function ImportSimulator() {
                 className="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-accent-gold"
               />
               <div className="flex justify-between text-[10px] text-neutral-500 font-sans mt-1">
-                <span>10.000 €</span>
+                <span>1.000 €</span>
                 <span>250.000 €</span>
               </div>
             </div>
 
             {/* Emisiones de CO2 */}
             <div>
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between items-center mb-3">
                 <label className="font-sans text-xs font-bold text-neutral-300 uppercase tracking-wider flex items-center gap-1.5">
                   Emisiones de CO2 (g/km)
                   <span title="Determina el Impuesto de Matriculación en España.">
                     <HelpCircle className="w-3.5 h-3.5 text-neutral-500 cursor-help" />
                   </span>
                 </label>
-                <span className="font-sans text-lg font-bold text-accent-gold">
-                  {co2} g/km
-                </span>
+                <div className="flex items-center gap-1.5 bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-1.5 focus-within:border-accent-gold transition-colors">
+                  <input
+                    type="number"
+                    min="0"
+                    max="999"
+                    disabled={fuelType === "electrico"}
+                    value={co2 || 0}
+                    onChange={(e) => setCo2(Number(e.target.value))}
+                    className="bg-transparent text-right font-sans text-sm font-bold text-accent-gold outline-none w-12 sm:w-16 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none border-none p-0 disabled:text-neutral-500"
+                  />
+                  <span className="font-sans text-sm font-bold text-accent-gold">g/km</span>
+                </div>
               </div>
               <input
                 type="range"

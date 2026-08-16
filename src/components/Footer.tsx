@@ -16,21 +16,13 @@ export default function Footer() {
         {/* Company Identity (4 columns equivalent) */}
         <div className="lg:col-span-4 space-y-6">
           <div className="flex items-center space-x-3">
-            <div className="relative w-10 h-10 overflow-hidden rounded bg-neutral-800 flex items-center justify-center border border-neutral-700">
+            <div className="relative w-36 h-12">
               <Image
                 src="/logo.png"
                 alt="NORD IMPORT Logo"
                 fill
-                className="object-contain p-1"
+                className="object-contain object-left"
               />
-            </div>
-            <div className="flex flex-col justify-center">
-              <span className="font-display text-base tracking-[0.25em] font-bold text-white leading-none">
-                N O R D
-              </span>
-              <span className="font-sans text-[8px] tracking-[0.3em] font-bold text-accent-gold mt-1 leading-none">
-                IMPORT
-              </span>
             </div>
           </div>
           <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed max-w-sm">

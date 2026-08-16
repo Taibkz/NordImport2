@@ -78,7 +78,7 @@ export default function UpdatePasswordPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow bg-neutral-50 flex items-center justify-center py-12 px-6 min-h-[85vh]">
+      <main className="flex-grow bg-neutral-50 flex items-center justify-center pt-[96px] lg:pt-[120px] pb-12 px-6 min-h-[85vh]">
         <div className="w-full max-w-[480px] bg-white border border-neutral-200/60 shadow-2xl rounded-2xl p-6 sm:p-10">
           
           <div className="text-center mb-8">

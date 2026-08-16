@@ -15,7 +15,7 @@ export default function EditarVehiculoPage({ params }: PageProps) {
   return (
     <>
       <Header />
-      <main className="flex-grow bg-neutral-50 min-h-screen py-6">
+      <main className="flex-grow bg-neutral-50 min-h-screen pt-[72px] lg:pt-[80px] pb-6">
         <PublishForm carId={id} />
       </main>
       <Footer />

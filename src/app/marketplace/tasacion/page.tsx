@@ -42,7 +42,7 @@ export default function TasacionPage() {
   return (
     <>
       <Header />
-      <main className="flex-grow bg-neutral-50 py-12 min-h-screen">
+      <main className="flex-grow bg-neutral-50 pt-[72px] lg:pt-[80px] pb-12 min-h-screen">
         <div className="max-w-3xl mx-auto px-6">
           
           {/* Enlace atrás */}
