@@ -289,9 +289,11 @@ export default function Header() {
         <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-out font-sans text-[11px] font-bold uppercase tracking-wider whitespace-nowrap px-0 group-hover:px-1">
           ¿Hablamos?
         </span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
-          <path d="M12.031 0C5.39 0 .002 5.39.002 12.03c0 2.119.549 4.18 1.59 6.02L0 24l6.135-1.61c1.782.97 3.791 1.489 5.882 1.494 6.643 0 12.03-5.39 12.03-12.03C24.047 5.39 18.66 0 12.03 0zm6.59 17.203c-.26.73-1.503 1.428-2.072 1.493-.57.065-1.13.23-3.61-.75-2.98-1.22-4.9-4.26-5.05-4.46-.15-.2-1.2-1.597-1.2-3.048 0-1.45.76-2.16 1.03-2.45.27-.29.58-.36.78-.36.2 0 .4 0 .58.01.19.01.44-.07.69.52.26.63.88 2.13.96 2.29.08.16.13.35.03.55-.1.2-.15.33-.3.51-.15.18-.32.4-.46.54-.16.16-.33.33-.14.66.19.33.85 1.4 1.83 2.28 1.26 1.13 2.32 1.48 2.65 1.65.33.17.53.15.73-.08.2-.23.85-.99.98-1.18.13-.19.26-.16.44-.1.18.06 1.15.54 1.35.64.2.1.33.15.38.24.05.09.05.52-.16 1.25z"/>
-        </svg>
+        <img
+          src="/social/whatsapp.png"
+          alt="WhatsApp"
+          className="w-6 h-6 object-contain shrink-0"
+        />
       </a>
     )}
   </>
