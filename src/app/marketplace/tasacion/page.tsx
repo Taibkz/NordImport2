@@ -26,7 +26,7 @@ export default function TasacionPage() {
       
       // Abrir cliente de correo
       const bodyText = `Hola equipo de NordImport,%0A%0ADeseo tasar mi vehículo actual como parte de pago (Plan Renove):%0A%0A- Vehículo a entregar: ${formData.myCar}%0A- Año/Matrícula: ${formData.yearPlate}%0A- Vehículo de interés: ${formData.targetCar || "Cualquiera"}%0A- Teléfono de contacto: ${formData.phone}%0A- Correo electrónico: ${formData.email}`;
-      window.location.href = `mailto:tasaciones@nordimport.com?subject=Solicitud de Tasación Plan Renove: ${formData.myCar}&body=${bodyText}`;
+      window.location.href = `mailto:nordimport.contact@gmail.com?subject=Solicitud de Tasación Plan Renove: ${formData.myCar}&body=${bodyText}`;
 
       setStatus("¡Formulario procesado! Se ha abierto tu cliente de correo.");
       setFormData({

@@ -127,16 +127,16 @@ export default function Footer() {
             <li className="flex items-start space-x-3">
               <MapPin className="w-4 h-4 text-accent-gold shrink-0 mt-0.5" />
               <span className="text-neutral-400 leading-relaxed">
-                Paseo de la Castellana, 95 (Torre Europa)<br />28046 Madrid, España
+                C. Isla de la Gomera, Norte<br />18014 Granada, España
               </span>
             </li>
             <li className="flex items-center space-x-3">
               <Phone className="w-4 h-4 text-accent-gold shrink-0" />
-              <span className="text-neutral-400">+34 910 000 000</span>
+              <span className="text-neutral-400">+34 643 18 14 64</span>
             </li>
             <li className="flex items-center space-x-3">
               <Mail className="w-4 h-4 text-accent-gold shrink-0" />
-              <span className="text-neutral-400">contacto@nordimport.com</span>
+              <span className="text-neutral-400">nordimport.contact@gmail.com</span>
             </li>
           </ul>
         </div>
