@@ -279,7 +279,7 @@ export default function Header() {
       href="https://wa.me/34643181464?text=Hola%20NordImport%2C%20estoy%20interesado%20en%20importar%20un%20veh%C3%ADculo."
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-3.5 shadow-2xl hover:scale-115 transition-all duration-300 flex items-center gap-2 group cursor-pointer border border-white/10"
+      className="fixed bottom-6 right-6 z-[9999] bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-3.5 shadow-2xl hover:scale-115 transition-all duration-300 flex items-center gap-2 group cursor-pointer border border-white/10"
       title="Contactar por WhatsApp"
     >
       <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-out font-sans text-[11px] font-bold uppercase tracking-wider whitespace-nowrap px-0 group-hover:px-1">
