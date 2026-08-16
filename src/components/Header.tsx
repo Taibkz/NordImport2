@@ -275,21 +275,23 @@ export default function Header() {
     </header>
 
     {/* Floating WhatsApp Button */}
-    <a
-      href="https://wa.me/34643181464?text=Hola%20NordImport%2C%20estoy%20interesado%20en%20importar%20un%20veh%C3%ADculo."
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-[9999] bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-3.5 shadow-2xl hover:scale-115 transition-all duration-300 flex items-center gap-2 group cursor-pointer border border-white/10"
-      title="Contactar por WhatsApp"
-    >
-      <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-out font-sans text-[11px] font-bold uppercase tracking-wider whitespace-nowrap px-0 group-hover:px-1">
-        ¿Hablamos?
-      </span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
-        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436.002 9.858-4.417 9.86-9.86 0-2.639-1.027-5.119-2.89-6.983-1.862-1.862-4.341-2.887-6.979-2.888-5.439 0-9.86 4.417-9.862 9.861-.001 1.762.476 3.42 1.385 4.83l-.999 3.647 3.743-.982z"/>
-        <path d="M15.827 12.912c-.225-.113-1.332-.657-1.54-.731-.205-.075-.354-.112-.504.112-.149.224-.578.73-.708.88-.13.15-.26.168-.485.056-.225-.113-.95-.35-1.81-1.118-.67-.597-1.121-1.335-1.253-1.56-.13-.225-.014-.347.098-.46.1-.1.224-.262.336-.393.112-.13.149-.224.224-.374.075-.15.037-.281-.018-.393-.056-.113-.505-1.217-.692-1.666-.181-.435-.366-.377-.504-.383-.13-.006-.28-.008-.43-.008-.15 0-.393.056-.6.281-.205.224-.785.767-.785 1.871 0 1.104.804 2.17 0.916 2.32.113.15 1.582 2.415 3.832 3.387.536.231.954.369 1.28.473.537.171 1.026.147 1.411.09.43-.064 1.332-.544 1.52-1.067.188-.524.188-.973.131-1.067-.057-.094-.206-.15-.43-.263z"/>
-      </svg>
-    </a>
+    {!mobileMenuOpen && (
+      <a
+        href="https://wa.me/34643181464?text=Hola%20NordImport%2C%20estoy%20interesado%20en%20importar%20un%20veh%C3%ADculo."
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-24 right-6 sm:bottom-6 z-[9999] bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-3.5 shadow-2xl hover:scale-115 transition-all duration-300 flex items-center gap-2 group cursor-pointer border border-white/10"
+        title="Contactar por WhatsApp"
+      >
+        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-out font-sans text-[11px] font-bold uppercase tracking-wider whitespace-nowrap px-0 group-hover:px-1">
+          ¿Hablamos?
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436.002 9.858-4.417 9.86-9.86 0-2.639-1.027-5.119-2.89-6.983-1.862-1.862-4.341-2.887-6.979-2.888-5.439 0-9.86 4.417-9.862 9.861-.001 1.762.476 3.42 1.385 4.83l-.999 3.647 3.743-.982z"/>
+          <path d="M15.827 12.912c-.225-.113-1.332-.657-1.54-.731-.205-.075-.354-.112-.504.112-.149.224-.578.73-.708.88-.13.15-.26.168-.485.056-.225-.113-.95-.35-1.81-1.118-.67-.597-1.121-1.335-1.253-1.56-.13-.225-.014-.347.098-.46.1-.1.224-.262.336-.393.112-.13.149-.224.224-.374.075-.15.037-.281-.018-.393-.056-.113-.505-1.217-.692-1.666-.181-.435-.366-.377-.504-.383-.13-.006-.28-.008-.43-.008-.15 0-.393.056-.6.281-.205.224-.785.767-.785 1.871 0 1.104.804 2.17 0.916 2.32.113.15 1.582 2.415 3.832 3.387.536.231.954.369 1.28.473.537.171 1.026.147 1.411.09.43-.064 1.332-.544 1.52-1.067.188-.524.188-.973.131-1.067-.057-.094-.206-.15-.43-.263z"/>
+        </svg>
+      </a>
+    )}
   </>
 );
 }
