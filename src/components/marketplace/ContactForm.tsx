@@ -43,18 +43,32 @@ export default function ContactForm({ car }: ContactFormProps) {
       console.log("Mock lead simulation (Supabase not configured):", leadPayload);
     }
 
-    // Configurar el email del receptor (correo del vendedor o el genérico de NordImport)
-    const sellerEmail = car.profiles?.email || "info@nordimport.com";
-    const emailBody = `Hola, mi nombre es ${formData.name}.%0A%0AEstoy interesado en el vehículo en venta: ${car.brand} ${car.model}.%0A%0AMi teléfono es: ${formData.phone}%0AMi e-mail es: ${formData.email}%0A%0AMensaje adicional:%0A${formData.message}`;
-    
-    // Abrir el cliente de correo nativo
-    window.location.href = `mailto:${sellerEmail}?subject=Interés de Compra: ${car.brand} ${car.model}&body=${emailBody}`;
+    let apiSuccess = true;
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "marketplace",
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          carDetails: `${car.brand} ${car.model} (${car.price.toLocaleString("es-ES")} €)`,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Error enviando email");
+    } catch (err) {
+      console.error("Error calling contact API:", err);
+      apiSuccess = false;
+    }
 
     setLoading(false);
-    if (!dbSuccess) {
-      setStatus("Cliente de correo abierto. (Error al registrar en BD local)");
+    if (!dbSuccess && !apiSuccess) {
+      setStatus("❌ Hubo un error al procesar tu mensaje. Reinténtalo de nuevo.");
     } else {
-      setStatus("¡Cliente de correo abierto para enviar tu mensaje!");
+      setStatus("✅ ¡Mensaje recibido! Nos pondremos en contacto contigo muy pronto.");
       setFormData({ name: "", email: "", phone: "", message: "" });
     }
   };

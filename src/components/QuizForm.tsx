@@ -70,29 +70,47 @@ export default function QuizForm() {
       servicio_deseado: formData.servicio,
     };
 
-    if (!isSupabaseConfigured || !supabase) {
-      setTimeout(() => {
-        console.log("Demo Mode Lead Payload:", leadPayload);
-        setDemoNotice(true);
-        setLoading(false);
-        setSuccess(true);
-      }, 1000);
-      return;
-    }
-
+    // Enviar el lead por correo electrónico mediante la API de Resend
+    let apiSuccess = true;
     try {
-      const { error } = await supabase.from("leads").insert(leadPayload);
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "quiz",
+          name: formData.nombre,
+          email: formData.email,
+          phone: formData.telefono,
+          carDetails: `${formData.marca} ${formData.modelo} (Año mín: ${formData.anoMin || "Indiferente"})`,
+          budget: formData.presupuesto,
+          serviceLevel: formData.servicio,
+        }),
+      });
 
-      if (error) throw error;
-
-      setSuccess(true);
-    } catch (err: any) {
-      console.error("Error inserting lead:", err);
-      setDemoNotice(true);
-      setSuccess(true);
-    } finally {
-      setLoading(false);
+      if (!response.ok) throw new Error("Error en API de contacto");
+    } catch (err) {
+      console.error("Error sending quiz lead email:", err);
+      apiSuccess = false;
     }
+
+    let dbSuccess = true;
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { error } = await supabase.from("leads").insert(leadPayload);
+        if (error) throw error;
+      } catch (err) {
+        console.error("Error inserting lead to Supabase:", err);
+        dbSuccess = false;
+      }
+    } else {
+      dbSuccess = false;
+    }
+
+    setLoading(false);
+    if (!dbSuccess && !isSupabaseConfigured) {
+      setDemoNotice(true);
+    }
+    setSuccess(true);
   };
 
   return (
