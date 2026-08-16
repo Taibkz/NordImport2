@@ -176,7 +176,7 @@ export default function MarketplacePage() {
   return (
     <>
       <Header />
-      <main className="flex-grow bg-neutral-50 relative min-h-screen pt-[72px] lg:pt-[80px]">
+      <main className="flex-grow bg-neutral-50 relative min-h-screen pt-[96px] lg:pt-[116px]">
         
         {/* Banner Informativo Modo Demo */}
         {demoMode && (
@@ -582,7 +582,7 @@ export default function MarketplacePage() {
               </p>
             </div>
           ) : filteredCars.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
               {filteredCars.map((car) => (
                 <CarCard key={car.id} car={car} />
               ))}

@@ -96,7 +96,7 @@ export default function Header() {
           className="flex items-center space-x-3 group"
         >
           {/* Logo Image */}
-          <div className="relative w-32 h-10 sm:w-44 sm:h-14 transition-transform group-hover:scale-105">
+          <div className="relative w-40 h-12 sm:w-52 sm:h-16 lg:w-60 lg:h-18 transition-transform group-hover:scale-105">
             <Image
               src="/logo.png"
               alt="NORD IMPORT Logo"
@@ -107,9 +107,8 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* CENTRAL LINKS (Desktop) */}
         <nav className="hidden lg:flex items-center space-x-8">
-          {["stock", "servicios", "proceso", "media"].map((sec) => (
+          {["servicios", "proceso", "stock", "media"].map((sec) => (
             <button
               key={sec}
               onClick={() => handleScrollTo(sec)}
@@ -196,10 +195,10 @@ export default function Header() {
         </button>
       </div>
 
-      {/* MOBILE MENU DRAWER */}
+       {/* MOBILE MENU DRAWER */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-neutral-100 shadow-xl absolute top-full left-0 right-0 py-6 px-6 flex flex-col space-y-4 animate-fadeIn max-h-[85vh] overflow-y-auto">
-          {["stock", "servicios", "proceso", "media"].map((sec) => (
+          {["servicios", "proceso", "stock", "media"].map((sec) => (
             <button
               key={sec}
               onClick={() => handleScrollTo(sec)}

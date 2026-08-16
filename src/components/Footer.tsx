@@ -16,7 +16,7 @@ export default function Footer() {
         {/* Company Identity (4 columns equivalent) */}
         <div className="lg:col-span-4 space-y-6">
           <div className="flex items-center space-x-3">
-            <div className="relative w-36 h-12">
+            <div className="relative w-44 h-16">
               <Image
                 src="/logo.png"
                 alt="NORD IMPORT Logo"
