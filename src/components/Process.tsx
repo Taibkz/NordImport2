@@ -32,7 +32,7 @@ export default function Process() {
   ];
 
   return (
-    <section id="proceso" className="py-20 lg:py-24 bg-slate-50 border-t border-neutral-100">
+    <section id="proceso" className="min-h-screen flex flex-col justify-center py-20 bg-slate-50 border-t border-neutral-100 snap-start">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16 flex flex-col items-center">

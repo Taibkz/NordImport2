@@ -37,7 +37,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] lg:min-h-[95vh] flex items-center pt-20 lg:pt-24 pb-12 lg:pb-16 bg-gradient-to-b from-slate-50 via-white to-white overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-24 pb-16 bg-gradient-to-b from-slate-50 via-white to-white overflow-hidden snap-start">
       {/* Decorative background grid and blurs */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#f1f5f9_1px,transparent_1px),linear-gradient(to_bottom,#f1f5f9_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-60" />
       

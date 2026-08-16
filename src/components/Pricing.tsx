@@ -91,7 +91,7 @@ export default function Pricing() {
   };
 
   return (
-    <section id="precios" className="py-20 lg:py-24 bg-neutral-50 border-t border-b border-neutral-100">
+    <section id="precios" className="min-h-screen flex flex-col justify-center py-20 bg-neutral-50 border-t border-b border-neutral-100 snap-start">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Section Title */}
@@ -101,7 +101,7 @@ export default function Pricing() {
             Tarifas Claras y Transparentes
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-neutral-900 mb-4">
-            Planes y Servicios de Importación
+            Servicios y Tarifas
           </h2>
           <div className="h-[2px] w-12 bg-accent-gold mb-4" />
           <p className="font-sans text-xs sm:text-sm text-neutral-600 max-w-xl leading-relaxed">

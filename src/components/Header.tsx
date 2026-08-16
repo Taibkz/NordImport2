@@ -109,13 +109,13 @@ export default function Header() {
         </Link>
 
         <nav className="hidden lg:flex items-center space-x-8">
-          {["servicios", "proceso", "precios", "stock", "media"].map((sec) => (
+          {["precios", "proceso", "stock", "media"].map((sec) => (
             <button
               key={sec}
               onClick={() => handleScrollTo(sec)}
               className="font-sans text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors capitalize cursor-pointer relative py-1"
             >
-              {sec === "media" ? "Ecosistema" : sec === "precios" ? "Tarifas" : sec}
+              {sec === "media" ? "Ecosistema" : sec === "precios" ? "Servicios y Tarifas" : sec}
             </button>
           ))}
           
@@ -199,13 +199,13 @@ export default function Header() {
        {/* MOBILE MENU DRAWER */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-neutral-100 shadow-xl absolute top-full left-0 right-0 py-6 px-6 flex flex-col space-y-4 animate-fadeIn max-h-[85vh] overflow-y-auto">
-          {["servicios", "proceso", "precios", "stock", "media"].map((sec) => (
+          {["precios", "proceso", "stock", "media"].map((sec) => (
             <button
               key={sec}
               onClick={() => handleScrollTo(sec)}
               className="text-left font-sans text-sm font-semibold text-neutral-700 hover:text-neutral-900 py-2 border-b border-neutral-50 capitalize"
             >
-              {sec === "media" ? "Ecosistema de Contenidos" : sec === "precios" ? "Tarifas" : sec}
+              {sec === "media" ? "Ecosistema de Contenidos" : sec === "precios" ? "Servicios y Tarifas" : sec}
             </button>
           ))}
           

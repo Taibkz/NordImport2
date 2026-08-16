@@ -54,7 +54,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${inter.variable} ${cormorant.variable} ${cinzel.variable} scroll-smooth h-full antialiased`}
+      className={`${inter.variable} ${cormorant.variable} ${cinzel.variable} scroll-smooth h-full antialiased snap-y snap-mandatory`}
     >
       <body className="min-h-full flex flex-col selection:bg-accent-gold/30 selection:text-neutral-900 bg-white text-neutral-900">
         <AuthProvider>
