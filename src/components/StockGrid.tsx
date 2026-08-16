@@ -117,7 +117,7 @@ export default function StockGrid() {
   };
 
   return (
-    <section id="stock" className="min-h-screen flex flex-col justify-center py-20 bg-slate-50 border-y border-neutral-100 snap-start">
+    <section id="stock" className="py-20 lg:py-24 bg-slate-50 border-y border-neutral-100">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16 flex flex-col items-center">

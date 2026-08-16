@@ -91,7 +91,7 @@ export default function Pricing() {
   };
 
   return (
-    <section id="precios" className="min-h-screen flex flex-col justify-center py-20 bg-neutral-50 border-t border-b border-neutral-100 snap-start">
+    <section id="precios" className="py-20 lg:py-24 bg-neutral-50 border-t border-b border-neutral-100">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Section Title */}
