@@ -15,7 +15,7 @@ export default function Home() {
       <Header />
       {/* En desktop (lg:) el main se convierte en el contenedor del snap-scroll.
           En móvil es scroll libre normal. */}
-      <main className="flex-grow bg-white lg:h-screen lg:overflow-y-scroll lg:snap-y lg:snap-mandatory">
+      <main className="flex-grow bg-white lg:h-screen lg:overflow-y-scroll lg:snap-y lg:snap-mandatory lg:scroll-pt-20">
         <Hero />
         <ImportSimulator />
         <Pricing />
