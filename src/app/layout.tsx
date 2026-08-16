@@ -24,6 +24,7 @@ const cinzel = Cinzel({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nordimport.vercel.app"),
   title: "NORD IMPORT | Importación de Coches Premium y Alta Gama",
   description:
     "Especialistas en importación y compraventa de vehículos de lujo y alta gama desde el norte de Europa (Alemania, Suecia) a España. Garantía total y servicio a la carta.",
